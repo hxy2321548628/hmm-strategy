@@ -1,0 +1,61 @@
+# Paths are relative to this file. Use only locally trusted pickle data.
+log_level = "INFO"
+
+[data]
+derivatives = "../data/domain_data/IFdominant_post_data_20141017_20231127.pkl"
+benchmark = "../data/index_data/hs300_index_20141017_20231127.pkl"
+weights = "../data/index_weight_20141017_20231127/index_hs300_weight_20141017_20231127.pkl"
+constituents = "../data/index_comp/hs300_comp_20141017_20231127.pkl"
+stocks = "../data/stock_price/stock_post_data_20141017_20231127.pkl"
+allow_pickle = true
+
+[[features]]
+name = "log_return_5"
+kind = "log_return"
+window = 5
+transform = "yeo_johnson"
+
+[preprocessing]
+standardize = true
+boxcox_margin = 1.0
+numerical_epsilon = 1e-10
+
+[hmm]
+selection = "fixed"
+n_states = 5
+candidates = [3, 4, 5, 6, 7]
+covariance = "diag"
+max_iterations = 300
+tolerance = 0.01
+min_covariance = 0.001
+random_seed = 11
+
+[window]
+train_size = 520
+test_size = 30
+
+[signal]
+threshold_mode = "fixed"
+cumulative_threshold = 1.08
+
+[backtest]
+initial_cash = 10000000
+commission = 0.00015
+slippage = 0.0001
+trading_days = 252
+annual_risk_free_rate = 0.0
+weighting = "index"
+cash_reserve = 0.05
+lot_size = 100
+
+[report]
+directory = "../outputs"
+plot = false
+figure_size = [12, 7]
+dpi = 150
+
+[search]
+thresholds = [1.0, 1.08, 1.2]
+train_sizes = [260, 520]
+test_sizes = [20, 30]
+max_workers = 1

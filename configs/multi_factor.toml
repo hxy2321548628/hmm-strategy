@@ -1,0 +1,39 @@
+[data]
+derivatives = "../data/domain_data/IFdominant_post_data_20141017_20231127.pkl"
+benchmark = "../data/index_data/hs300_index_20141017_20231127.pkl"
+allow_pickle = true
+
+[[features]]
+name = "log_return_5"
+kind = "log_return"
+window = 5
+transform = "yeo_johnson"
+
+[[features]]
+name = "high_low"
+kind = "high_low"
+transform = "box_cox"
+
+[[features]]
+name = "ma_spread"
+kind = "moving_average_spread"
+window = 10
+slow_window = 20
+transform = "yeo_johnson"
+
+[preprocessing]
+pca_variance = 0.8
+
+[hmm]
+selection = "bic"
+candidates = [3, 4, 5]
+
+[signal]
+threshold_mode = "benchmark"
+
+[report]
+directory = "../outputs"
+
+[search]
+thresholds = [1.0, 1.08]
+pca_variances = [0.7, 0.8, 0.9]
